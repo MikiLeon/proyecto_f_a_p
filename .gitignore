@@ -2,3 +2,4 @@ env_fundacio_a_p/
 inputs/
 notebooks/
 .streamlit/
+__pycache__/
