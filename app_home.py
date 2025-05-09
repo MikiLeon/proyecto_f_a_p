@@ -15,7 +15,7 @@ if password == st.secrets["access_password"]:
 
     if page == "Mapa":
         m_i_app()
-    elif page == "Estadisticas":
+    elif page == "Estadísticas":
         std_app()
 
 else:

@@ -11,8 +11,6 @@ def cargar_datos_restos(url):
     df_agrupado['Tipo'] = pd.Categorical(df_agrupado['Tipo'])
     return df_agrupado
 
-
-
 def cargar_datos_servicios(url):
     df = pd.read_csv(url)
     return df
@@ -25,8 +23,6 @@ def calcular_totales_restos(df):
     #Total por distrito
     total_por_distrito = df.groupby('Distrito')['Cantidad'].sum().sort_values(ascending=False)
     return total_por_tipo, total_por_barrio,total_por_distrito
-
-
 
 def contar_servicios_por_tipo_distrito(df):
     return df.groupby(['Distrito','Tipo' ]).size().reset_index(name='Cantidad')
@@ -55,10 +51,6 @@ def grafico_barras_servicios(df, titulo):
         )
     fig.update_layout(barmode='stack',xaxis={'categoryorder':'total descending'} )
     return fig
-
-
-
-
 
 def crear_trazas_consumos(df):
     trazas = []

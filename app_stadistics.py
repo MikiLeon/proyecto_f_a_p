@@ -15,9 +15,9 @@ def app():
 
 
     # URLs de datos
-    DATA = ('https://docs.google.com/spreadsheets/d/e/2PACX-1vT4GG7D9PKkctFY9qO1j-P0hmqeiRiGH99kJ18jrg1un3Kv66jpsPHCACItBW-srw/pub?gid=407726589&single=true&output=csv')
+    DATA = st.secrets["data_1_url"]
 
-    DATA_2= ('https://docs.google.com/spreadsheets/d/e/2PACX-1vT4GG7D9PKkctFY9qO1j-P0hmqeiRiGH99kJ18jrg1un3Kv66jpsPHCACItBW-srw/pub?gid=395322673&single=true&output=csv')
+    DATA_2= st.secrets["data_2_url"]
 
 
     # Cargar datos
