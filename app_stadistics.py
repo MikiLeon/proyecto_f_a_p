@@ -1,0 +1,52 @@
+import plotly.graph_objects as go
+import streamlit as st
+
+def app():
+    st.header("Estadísticas generales")
+
+    from utils import (
+        cargar_datos_restos,
+        cargar_datos_servicios,
+        calcular_totales_restos,
+        contar_servicios_por_tipo_distrito,
+        grafico_barras_totales,
+        grafico_barras_servicios
+    )
+
+
+    # URLs de datos
+    DATA = ('https://docs.google.com/spreadsheets/d/e/2PACX-1vT4GG7D9PKkctFY9qO1j-P0hmqeiRiGH99kJ18jrg1un3Kv66jpsPHCACItBW-srw/pub?gid=407726589&single=true&output=csv')
+
+    DATA_2= ('https://docs.google.com/spreadsheets/d/e/2PACX-1vT4GG7D9PKkctFY9qO1j-P0hmqeiRiGH99kJ18jrg1un3Kv66jpsPHCACItBW-srw/pub?gid=395322673&single=true&output=csv')
+
+
+    # Cargar datos
+    gr_locations = cargar_datos_restos(DATA)
+    servicios_drogas = cargar_datos_servicios(DATA_2)
+
+    #Estadisticos
+    total_por_tipo, total_por_barrio, total_por_distrito = calcular_totales_restos(gr_locations)
+    servicios_por_tipo_distrito = contar_servicios_por_tipo_distrito(servicios_drogas)
+
+    #Graficos
+    fig_tipo = grafico_barras_totales(total_por_tipo,'Restos de consumo por tipo de resto','Tipo','Cantidad')
+    fig_barrio = grafico_barras_totales(total_por_barrio, 'Restos de consumo por barrio', 'Barrio', 'Cantidad')
+    fig_distrito= grafico_barras_totales(total_por_distrito, 'Restos de consumo por distrito','Distrito', 'Tipo')
+    fig_servicios= grafico_barras_servicios(servicios_por_tipo_distrito, 'Distribución de servicios por distrito y tipo de servicio')
+
+
+    #Muestra los gráficos en Streamlit
+
+    st.header('Estadísticas generales')
+
+    st.subheader('Cantidad de restos de consumo por tipo de resto')
+    st.plotly_chart(fig_tipo,use_container_width=True )
+
+    st.subheader('Cantidad de restos de consumo por barrio')
+    st.plotly_chart(fig_barrio,use_container_width=True )
+
+    st.subheader('Cantidad de restos de consumo por distrito')
+    st.plotly_chart(fig_distrito,use_container_width=True )
+
+    st.subheader('Servicios disponibles por distrito')
+    st.plotly_chart(fig_servicios,use_container_width=True )
