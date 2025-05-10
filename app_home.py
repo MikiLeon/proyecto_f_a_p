@@ -11,7 +11,7 @@ if password == st.secrets["access_password"]:
     st.success("¡Contraseña correcta! Cargando datos...")
 
     # Creación de un selector de páginas
-    page = st.sidebar.radio("Selecciona una pestaña", ("Mapa", "Estadisticas"))
+    page = st.sidebar.radio("Selecciona una pestaña", ("Mapa", "Estadísticas"))
 
     if page == "Mapa":
         m_i_app()

@@ -37,6 +37,9 @@ def app():
         inicio= pd.to_datetime(rango_fechas[0])
         fin = pd.to_datetime(rango_fechas[1])
         gr_locations = gr_locations[(gr_locations['Mes']>=inicio) & (gr_locations['Mes']<=fin)]
+        
+        # Guardar el rango de fechas en el estado de la aplicación
+        st.session_state['rango_fechas'] = (inicio, fin)  
 
 
     # Crear Mapa

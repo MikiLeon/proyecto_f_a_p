@@ -16,13 +16,21 @@ def app():
 
     # URLs de datos
     DATA = st.secrets["data_1_url"]
-
     DATA_2= st.secrets["data_2_url"]
-
 
     # Cargar datos
     gr_locations = cargar_datos_restos(DATA)
     servicios_drogas = cargar_datos_servicios(DATA_2)
+
+    # Revisar si el rango de fechas está definido
+    if 'rango_fechas' in st.session_state:
+        inicio, fin = st.session_state['rango_fechas']
+        gr_locations = gr_locations[(gr_locations['Mes'] >= inicio) & (gr_locations['Mes'] <= fin)]
+        # Mostrar el rango de fechas seleccionado
+        st.subheader(f"Rango de fechas seleccionado: {inicio.date()} a {fin.date()}")
+    else:
+        st.warning("No se ha seleccionado un rango de fechas. Mostrando datos completos.")
+
 
     #Estadisticos
     total_por_tipo, total_por_barrio, total_por_distrito = calcular_totales_restos(gr_locations)
