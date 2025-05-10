@@ -45,7 +45,7 @@ def app():
 
     #Muestra los gráficos en Streamlit
 
-    st.header('Estadísticas generales')
+
 
     st.subheader('Cantidad de restos de consumo por tipo de resto')
     st.plotly_chart(fig_tipo,use_container_width=True )
