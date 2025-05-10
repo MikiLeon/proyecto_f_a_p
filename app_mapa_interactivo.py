@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import streamlit as st
+import pandas as pd
 
 
 
@@ -22,6 +23,20 @@ def app():
     # Cargar datos
     gr_locations = cargar_datos_restos(DATA)
     servicios_drogas = cargar_datos_servicios(DATA_2)
+
+    # Filtro por rango de fechas reales
+    st.subheader('Filtar por fechas')
+
+    min_fecha =gr_locations['Mes'].min().date()
+    max_fecha =gr_locations['Mes'].max().date()
+
+    rango_fechas = st.date_input('Seleccione rango de fechas:', [min_fecha,max_fecha])
+
+    # Filtrar datos según el rango elegido
+    if len(rango_fechas)==2:
+        inicio= pd.to_datetime(rango_fechas[0])
+        fin = pd.to_datetime(rango_fechas[1])
+        gr_locations = gr_locations[(gr_locations['Mes']>=inicio) & (gr_locations['Mes']<=fin)]
 
 
     # Crear Mapa

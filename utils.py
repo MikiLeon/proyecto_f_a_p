@@ -9,6 +9,7 @@ def cargar_datos_restos(url):
     df['Observaciones'] = df['Observaciones'].fillna('')
     df_agrupado = df.groupby(['Mes', 'Barrio', 'Distrito', 'lat', 'lon', 'Tipo', 'Observaciones'], as_index=False)['Cantidad'].sum()
     df_agrupado['Tipo'] = pd.Categorical(df_agrupado['Tipo'])
+    df_agrupado['Mes'] = pd.to_datetime(df_agrupado['Mes'], format= '%m/%y')
     return df_agrupado
 
 def cargar_datos_servicios(url):
