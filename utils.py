@@ -20,23 +20,35 @@ def calcular_totales_restos(df):
     #Total por tipo
     total_por_tipo = df.groupby('Tipo')['Cantidad'].sum().sort_values(ascending=False)
      #Total por barrio
-    total_por_barrio = df.groupby('Barrio')['Cantidad'].sum().sort_values(ascending=False)
+    total_por_barrio_por_tipo = df.groupby(['Barrio', 'Tipo'])['Cantidad'].sum().sort_values(ascending=False)
     #Total por distrito
-    total_por_distrito = df.groupby('Distrito')['Cantidad'].sum().sort_values(ascending=False)
-    return total_por_tipo, total_por_barrio,total_por_distrito
+    total_por_distrito_por_tipo = df.groupby(['Distrito', 'Tipo'])['Cantidad'].sum().sort_values(ascending=False)
+    return total_por_tipo, total_por_barrio_por_tipo,total_por_distrito_por_tipo
 
 def contar_servicios_por_tipo_distrito(df):
     return df.groupby(['Distrito','Tipo' ]).size().reset_index(name='Cantidad')
 
 #Grafíco barras totales
-def grafico_barras_totales(series, titulo, x_label, y_label):
-    fig = px.bar(
-        x= series.index,
-        y= series.values,
-        labels={'x':x_label,'y':y_label},
-        title=titulo
+def grafico_barras_totales(series, titulo, x_label, y_label, color_col= None):
+    if isinstance(series.index, pd.MultiIndex):
+        df= series.reset_index()
+        if len(df.columns)>2:
+            fig = px.bar(
+                df,
+                x= x_label,
+                y = y_label,
+                color= color_col,
+                title= titulo,
+                labels={'Tipo':'Tipo de resto' }
         )
-    fig.update_layout(xaxis_tickangle=-45)
+    else: 
+        fig = px.bar(
+            x=series.index,
+            y=series.values,
+            labels={'x': x_label, 'y': y_label},
+            title=titulo
+        )
+    fig.update_layout(barmode='stack', xaxis_tickangle=-45)
     return fig
 
 #grafico  barras servicios

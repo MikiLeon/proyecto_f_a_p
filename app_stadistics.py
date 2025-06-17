@@ -33,13 +33,13 @@ def app():
 
 
     #Estadisticos
-    total_por_tipo, total_por_barrio, total_por_distrito = calcular_totales_restos(gr_locations)
+    total_por_tipo, total_por_barrio_por_tipo, total_por_distrito_por_tipo = calcular_totales_restos(gr_locations)
     servicios_por_tipo_distrito = contar_servicios_por_tipo_distrito(servicios_drogas)
 
     #Graficos
-    fig_tipo = grafico_barras_totales(total_por_tipo,'Restos de consumo por tipo de resto','Tipo','Cantidad')
-    fig_barrio = grafico_barras_totales(total_por_barrio, 'Restos de consumo por barrio', 'Barrio', 'Cantidad')
-    fig_distrito= grafico_barras_totales(total_por_distrito, 'Restos de consumo por distrito','Distrito', 'Tipo')
+    fig_tipo = grafico_barras_totales(total_por_tipo,'Restos de consumo por tipo de resto','Tipo','Cantidad', )
+    fig_barrio = grafico_barras_totales(total_por_barrio_por_tipo, 'Restos de consumo por barrio ', 'Barrio', 'Cantidad', 'Tipo')
+    fig_distrito= grafico_barras_totales(total_por_distrito_por_tipo, 'Restos de consumo por distrito','Distrito', 'Cantidad','Tipo')
     fig_servicios= grafico_barras_servicios(servicios_por_tipo_distrito, 'Distribución de servicios por distrito y tipo de servicio')
 
 
